@@ -5,7 +5,7 @@ public class SimpleCalculator {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("Simple Calculator");
+            System.out.println("Simple Calculator")
             System.out.println("1. Addition");
             System.out.println("2. Subtraction");
             System.out.println("3. Multiplication");
@@ -15,15 +15,15 @@ public class SimpleCalculator {
             int choice = scanner.nextInt();
 
             if (choice == 5) {
-                System.out.println("Exiting...");
+                System.out.println("Exiting...")
                 break;
             }
 
             System.out.print("Enter the first number: ");
             double num1 = scanner.nextDouble();
-            System.out.print("Enter the second number: ");
+            System.out.print("Enter the second number: ")
             double num2 = scanner.nextDouble();
-            double result = 0;
+            double result = 0
 
             switch (choice) {
                 case 1:
