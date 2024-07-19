@@ -1,0 +1,66 @@
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+- develop
+- release/*
+- feature/*
+
+pool:
+  vmImage: 'windows-2019'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  isBuildServer: 'true'
+  
+
+steps:
+
+- task: UseGitVersion@5
+  name: gv
+  displayName: GitVersion
+  inputs:
+    versionSpec: '5.x'
+    additionalArguments: '/output BuildServer'
+
+- task: DotNetCoreCLI@2
+  displayName: dotnet build
+  inputs:
+    command: build
+    projects: 'Bot.Builder.Community.sln'
+    versioningScheme: byEnvVar
+    versionEnvVar: gv.GitVersion.NuGetVersion
+    arguments: "--configuration $(buildConfiguration)"
+
+- task: DotNetCoreCLI@2
+  displayName: dotnet test
+  inputs:
+    command: test
+    projects: 'Bot.Builder.Community.sln'
+    configuration: '$(buildConfiguration)'
+    nobuild: true
+  condition: succeeded()
+
+- task: DotNetCoreCLI@2
+  displayName: Restore
+  inputs:
+    command: restore
+    projects: 'Bot.Builder.Community.sln'
+
+- task: DotNetCoreCLI@2
+  displayName: dotnet pack
+  inputs:
+    packagesToPack: 'libraries/*/*.csproj'
+    command: pack
+    packDirectory: '$(Build.ArtifactStagingDirectory)/packages'
+    configuration: '$(buildConfiguration)'
+    versioningScheme: byEnvVar
+    versionEnvVar: gv.GitVersion.NuGetVersion
+    nobuild: true
+  condition: succeeded()
+
+- task: PublishBuildArtifacts@1
+  condition: succeeded()
