@@ -1,0 +1,54 @@
+<Project>
+  <PropertyGroup>
+    <PackageOutputPath>$(MSBuildThisFileDirectory)outputpackages\</PackageOutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>$(SolutionDir)BotBuilderCommunity-DotNet.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Company>BotBuilderCommunity</Company>
+    <Authors>BotBuilderCommunity</Authors>
+    <Product>Microsoft Bot Builder Community</Product>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Documentation|AnyCPU'">
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Rules found at: https://aka.ms/Microsoft-NuGet-Compliance -->
+    <PackageProjectUrl>http://www.github.com/botbuildercommunity/botbuildercommunity-dotnet</PackageProjectUrl>
+    <IconUrl>https://bot-framework.azureedge.net/static/58168-ae253ca613/intercom-webui/v1.6.2/assets/landing-page/images/BotFrame_Logo_Icon.png</IconUrl>
+    <PackageLicenseUrl>http://www.github.com/botbuildercommunity/botbuildercommunity-dotnet/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <RepositoryUrl>
+      http://www.github.com/botbuildercommunity/botbuildercommunity-dotnet
+    </RepositoryUrl>
+    <LicenseUrl>http://www.github.com/botbuildercommunity/botbuildercommunity-dotnet/blob/master/LICENSE</LicenseUrl>
+    <PackageTags>bots;ai;botframework;botbuilder</PackageTags>
+    <RepositoryType />
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <!--
+      Suppress a warning about upcoming deprecation of PackageLicenseUrl. When embedding licenses are supported,
+      replace PackageLicenseUrl with PackageLicenseExpression.
+    -->
+    <NoWarn>$(NoWarn);NU5125</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration) == 'Debug'">
+    <!-- For debug builds, we don't generate documentation. Supress the StyleCop rule that warns about this. -->
+    <NoWarn>$(NoWarn);SA0001</NoWarn>
+  </PropertyGroup>
+</Project>
